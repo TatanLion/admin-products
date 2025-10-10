@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist", // Directorio final
+        "rootDir": "./src", // Directorio inicial o donde esta
+        "lib": ["esnext"], // A que version de js lo compilara
+        "target": "esnext", // A que version de js lo compilara
+        "moduleResolution": "nodenext", // Tipo de modulo
+        "module": "nodenext", // Tipo de modulo
+        "strict": false, // Ser estricto con typescript
+        "sourceMap": true, // Genera el mapa de los archivos compilados
+        "esModuleInterop": true, // Permitira usar modules en los archivos
+        "declaration": true, // Generara archivos declarativos por cada uno
+        "experimentalDecorators": true, // Habilitar decoradores experimentales
+        "emitDecoratorMetadata": true, // Emitira metadatos de los decoradores
+        "isolatedModules": true
+
+    },
+    "include": [ // Esto indicara que archivos incluiremos para compilar
+        "src/**/*.ts"
+    ]
+}
