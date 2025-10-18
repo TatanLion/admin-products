@@ -224,8 +224,7 @@ router.post('/',
  */
 router.put('/:id',
     param('id')
-        .isInt().withMessage('ID must be an integer')
-        .toInt(),
+        .isInt().withMessage('ID must be an integer'),
     body('name')
         .notEmpty().withMessage('Name is required')
         .isLength({ min: 4, max: 100 }).withMessage('Name must be between 4 and 100 characters'),
@@ -298,8 +297,6 @@ router.patch('/:id',
     param('id')
         .isInt().withMessage('ID must be an integer')
         .toInt(),
-    body('availability')
-        .isBoolean().withMessage('Availability must be a boolean'),
     handleInputErrors,
     updateAvailability
 );

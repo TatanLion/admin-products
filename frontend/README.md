@@ -1,73 +1,45 @@
-# React + TypeScript + Vite
+## Acciones
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Actions are functions that are executed when a form is submitted. They allow you to handle form submissions and perform server-side logic, such as saving data to a database or processing user input.
 
-Currently, two official plugins are available:
+In this case, we will use <Form> from react-router-dom to create a form that submits data to an action function. The action function will be defined in the same file as the component that renders the form.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+React Router suggest call function action, but you can name it whatever you want. The important thing is to export it from the same file as the component that renders the form. An example of this function
 
-## React Compiler
+```tsx
+export async function action({ request }: ActionFunctionArgs) {
+  const data = Object.fromEntries(await request.formData());
+  let error = "";
+  if (Object.values(data).includes("")) {
+    error = "Todos los campos son obligatorios";
+    return error;
+  }
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+  return {};
+}
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Even we can get that error in the component with useActionData
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```tsx
+const error = useActionData() as string;
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+
+## Loaders
+
+Loaders are functions that are executed before a route is rendered. They allow you to fetch data from a server or perform other asynchronous operations before the component is displayed.
+In this case, we will use a loader function to fetch data from an API before rendering the Products component. The loader function will be defined in the same file as the Products component.
+
+```tsx
+export async function loader() {
+  const products = await getProducts();
+  return products;
+}
+```
+
+Then, we can use the useLoaderData hook to access the data returned by the loader function in the Products component.
+
+```tsx
+const products = useLoaderData() as Product[];
 ```

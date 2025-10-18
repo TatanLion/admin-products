@@ -14,7 +14,7 @@ export const updateAvailability = async (req: Request, res: Response) => {
     try {
         // @NOTE Actualizar solo el campo de availability - PATCH no es necesario traer todo el producto
         // @NOTE Si se envia true, se pone en false y viceversa
-        product.availability = !req.body.availability;
+        product.availability = !product.availability;
         await product.save();
         res.status(200).json({ 
             msg: 'Product updated successfully', 
